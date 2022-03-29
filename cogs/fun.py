@@ -38,5 +38,15 @@ class Fun(commands.Cog):
         await ctx.send(embed=em, view=MyView())
 
 
+    @commands.command()
+    @commands.is_owner()
+    async def shutdown(self, ctx):
+        try:
+            await self.client.logout()
+        except:
+            print("EnvironmentError")
+            self.client.clear()
+
+
 def setup(client):
     client.add_cog(Fun(client))
