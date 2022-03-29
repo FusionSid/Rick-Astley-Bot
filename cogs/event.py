@@ -4,6 +4,7 @@ import random
 import discord
 from discord.ext import commands
 
+
 class Event(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -11,16 +12,21 @@ class Event(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         if message.author.bot:
-                return
+            return
 
-        if (self.client.user.mentioned_in(message) and message.mention_everyone == False and message.reference is None):
+        if (
+            self.client.user.mentioned_in(message)
+            and message.mention_everyone == False
+            and message.reference is None
+        ):
             with open("./database/lyrics.json") as f:
                 data = json.load(f)
 
             send = random.choice(data)
             await message.channel.send(send)
 
-        await self.client.process_commands(message)    
+        await self.client.process_commands(message)
+
 
 def setup(client):
     client.add_cog(Event(client))
