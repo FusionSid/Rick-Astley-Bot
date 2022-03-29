@@ -3,6 +3,7 @@ import datetime
 
 import discord
 from discord.ext import commands
+from discord.commands import slash_command
 
 
 class MyView(discord.ui.View):
@@ -33,15 +34,16 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def claim(self, ctx):
-        em = discord.Embed(title="Claim 100k Coins", color=ctx.author.color)
+        em = discord.Embed(title="Claim 100k Coins", color=discord.Color.random())
         em.timestamp = datetime.datetime.utcnow()
         await ctx.send(embed=em, view=MyView())
 
 
-    @commands.command()
-    @commands.is_owner()
-    async def shutdown(self, ctx):
-        await self.client.logout()
+    @slash_command(name="claim", description="Claim you coins")
+    async def _claim(self, ctx):
+        em = discord.Embed(title="Claim 100k Coins", color=discord.Color.random())
+        em.timestamp = datetime.datetime.utcnow()
+        await ctx.send(embed=em, view=MyView())
 
 
 def setup(client):

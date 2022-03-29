@@ -100,5 +100,5 @@ if __name__ == "__main__":
             return
 
         await client.process_commands(message)
-
+    
     start_bot(client)
