@@ -1,4 +1,5 @@
 import os
+import json
 import time
 import datetime
 
@@ -10,6 +11,12 @@ load_dotenv()
 
 
 __version__ = "0.0.1"
+
+async def get_prefix(client, message):
+    with open("database/config.json") as f:
+        data = json.load(f)
+
+    return data["prefix"]
 
 
 class RickAstley(commands.Bot):
@@ -30,7 +37,7 @@ class RickAstley(commands.Bot):
             intents=intents,
             help_command=None,
             case_insensitive=True,
-            command_prefix=">",
+            command_prefix=get_prefix,
             owner_ids=[624076054969188363, 726987234284273675],
             allowed_mentions=allowed_mentions,
         )
@@ -50,7 +57,7 @@ def loading_bar(length: int, index: int, title: str, end: str):
     done = round(percent_done / (100 / 50))
     togo = 50 - done
 
-    done_str = "█" * int(done)
+    done_str = "█" * int(done)  
     togo_str = "░" * int(togo)
 
     print(f"{title} {done_str}{togo_str} {int(percent_done)}% Done", end="\r")
@@ -60,6 +67,12 @@ def loading_bar(length: int, index: int, title: str, end: str):
 
 
 def start_bot(client: RickAstley):
+    """
+    Starts up the bot
+
+    Parameters
+        :param client (RickAstley): The amazing rick astley client
+    """
     cogs = []
 
     for filename in os.listdir(f"cogs/"):
