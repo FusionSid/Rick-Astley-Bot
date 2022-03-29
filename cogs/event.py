@@ -24,8 +24,6 @@ class Event(commands.Cog):
 
             send = random.choice(data)
             await message.channel.send(send)
-        
-        await self.client.process_commands(message)
 
 
     @commands.Cog.listener()

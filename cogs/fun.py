@@ -41,11 +41,7 @@ class Fun(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def shutdown(self, ctx):
-        try:
-            await self.client.logout()
-        except:
-            print("EnvironmentError")
-            self.client.clear()
+        await self.client.logout()
 
 
 def setup(client):

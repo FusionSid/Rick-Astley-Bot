@@ -93,4 +93,12 @@ def start_bot(client: RickAstley):
 
 if __name__ == "__main__":
     client = RickAstley()
+
+    @client.event
+    async def on_message(message):
+        if message.author.bot:
+            return
+
+        await client.process_commands(message)
+
     start_bot(client)
