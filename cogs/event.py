@@ -24,8 +24,13 @@ class Event(commands.Cog):
 
             send = random.choice(data)
             await message.channel.send(send)
-
+        
         await self.client.process_commands(message)
+
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        print("Bot is online")
 
 
 def setup(client):
