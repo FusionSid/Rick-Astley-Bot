@@ -1,6 +1,7 @@
 import json
 import datetime
 
+import aiohttp
 import discord
 from discord.ext import commands
 from discord.commands import slash_command
@@ -57,6 +58,30 @@ class Fun(commands.Cog):
 
         await ctx.message.delete()
         await channel.send(embed=em)
+
+    
+    @commands.command(name = "runcode", usage = "runcode [language] [code]", description = "Runs code", help = "This command is used to run code. It supports many languages.")
+    async def runcode_(self, ctx, lang:str, *, code):
+        code = code.replace("`", "")
+        data = {
+            "language": lang,
+            "source" : f"""{code}"""
+        }
+        url = "https://emkc.org/api/v1/piston/execute"
+
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, data=data) as resp:
+                try:
+                    data = await resp.json()
+                except Exception as e: 
+                    print(e)
+                    data = resp
+        if data['ran'] == True:
+            Embed = discord.Embed(title = "Code Output", description = f"```{data['output']}```", color = discord.Color.green())
+            await ctx.send(embed = Embed)
+        if data['stderr'] != "":
+            Embed = discord.Embed(title = "Errors", description = f"```{data['stderr']}```", color = discord.Color.red())
+            await ctx.send(embed = Embed)
 
 def setup(client):
     client.add_cog(Fun(client))
