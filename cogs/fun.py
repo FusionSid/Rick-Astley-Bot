@@ -5,6 +5,7 @@ import discord
 from discord.ext import commands
 from discord.commands import slash_command
 
+from utils import kwarg_to_embed
 
 class MyView(discord.ui.View):
     def __init__(self):
@@ -45,6 +46,17 @@ class Fun(commands.Cog):
         em.timestamp = datetime.datetime.utcnow()
         await ctx.send(embed=em, view=MyView())
 
+
+    @commands.command()
+    async def embed(self, ctx, *, kwargs):
+        data = await kwarg_to_embed(self.client, ctx, kwargs)
+        if data is None:
+            return
+        em = data[0]
+        channel = data[1]
+
+        await ctx.message.delete()
+        await channel.send(embed=em)
 
 def setup(client):
     client.add_cog(Fun(client))
