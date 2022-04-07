@@ -60,7 +60,7 @@ CMD ["python3", "RickRoll.py", "main.rickroll"]
         container = run(["docker", "ps", "-a", "-q", "--filter", f"ancestor={image}"], capture_output=True).stdout.decode()
         print("CONTAINER:", container)
 
-        run([f"docker", "container", "kill", container])
+        os.system(f"docker container kill {container}")
 
 
 
