@@ -58,9 +58,9 @@ CMD ["python3", "RickRoll.py", "main.rickroll"]
             os.system(f"docker image rm -f {image}")
         except Exception as error:
             print("ERROR", error)
-            
+
         try:
-            container = run([f"docker ps -a -q  --filter ancestor={image}"], capture_output=True).stdout.decode()
+            container = run(["docker", "ps", "-a", "-q",  f"--filter ancestor={image}"], capture_output=True).stdout.decode()
             print(container)
             run([f"docker container kill {container}"])
         except Exception as error: 
