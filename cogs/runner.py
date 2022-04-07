@@ -52,16 +52,20 @@ CMD ["python3", "RickRoll.py", "main.rickroll"]
         shutil.rmtree(f"./files/{random_code}")
         
         await asyncio.sleep(10)
-    
+        
+        try:
+            image = run(["docker", "images", "-q", random_code], capture_output=True).stdout.decode()
+            os.system(f"docker image rm -f {image}")
+        except Exception as error:
+            print("ERROR", error)
+            
         try:
             container = run([f"docker ps -a -q  --filter ancestor={image}"], capture_output=True).stdout.decode()
             print(container)
             run([f"docker container kill {container}"])
         except Exception as error: 
-            print(error)
+            print("ERROR", error)
 
-        image = run(["docker", "images", "-q", random_code], capture_output=True).stdout.decode()
-        os.system(f"docker image rm -f {image}")
 
 
 
