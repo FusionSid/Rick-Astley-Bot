@@ -54,13 +54,13 @@ CMD ["python3", "RickRoll.py", "main.rickroll"]
         await asyncio.sleep(10)
         
         image = run(["docker", "images", "-q", random_code], capture_output=True).stdout.decode()
-        image_rm_output = run(["docker", "image", "rm", "-f", image], capture_output=True).stdout.decode()
+        os.system(f"docker image rm -f {image}")
+        print("IMAGE:", image)
 
-        print(image_rm_output, container)
-        if "image is being used by running container " in image_rm_output:
-            container = image_rm_output.split("image is being used by running container ")[1]
+        container = run(["docker", "ps", "-a", "-q", "--filter", f"ancestor={image}"], capture_output=True).stdout.decode()
+        print("CONTAINER:", container)
 
-            run([f"docker", "container", "kill", container])
+        run([f"docker", "container", "kill", container])
 
 
 
