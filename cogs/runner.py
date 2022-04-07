@@ -55,17 +55,17 @@ CMD ["python3", "RickRoll.py", "main.rickroll"]
         
         try:
             image = run(["docker", "images", "-q", random_code], capture_output=True).stdout.decode()
-            os.system(f"docker image rm -f {image}")
+            image_rm_output = run(["docker", "image", "rm", "-f", image], capture_output=True).stdout.decode()
         except Exception as error:
             print("ERROR", error)
 
-        if "image is being used by running container " in image:
-            container = image.split("image is being used by running container ")[1]
+        if "image is being used by running container " in image_rm_output:
+            container = image_rm_output.split("image is being used by running container ")[1]
 
-        try:
-            run([f"docker", "container", "kill", container])
-        except Exception as error: 
-            print("ERROR", error)
+            try:
+                run([f"docker", "container", "kill", container])
+            except Exception as error: 
+                print("ERROR", error)
 
 
 
