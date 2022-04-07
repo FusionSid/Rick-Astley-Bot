@@ -62,7 +62,7 @@ CMD ["python3", "RickRoll.py", "main.rickroll"]
         try:
             container = run(["docker", "ps", "-a", "-q",  f"--filter ancestor={image}"], capture_output=True).stdout.decode()
             print(container)
-            run([f"docker container kill {container}"])
+            run([f"docker", "container", "kill", container])
         except Exception as error: 
             print("ERROR", error)
 
