@@ -53,19 +53,14 @@ CMD ["python3", "RickRoll.py", "main.rickroll"]
         
         await asyncio.sleep(10)
         
-        try:
-            image = run(["docker", "images", "-q", random_code], capture_output=True).stdout.decode()
-            image_rm_output = run(["docker", "image", "rm", "-f", image], capture_output=True).stdout.decode()
-        except Exception as error:
-            print("ERROR", error)
+        image = run(["docker", "images", "-q", random_code], capture_output=True).stdout.decode()
+        image_rm_output = run(["docker", "image", "rm", "-f", image], capture_output=True).stdout.decode()
 
+        print(image_rm_output, container)
         if "image is being used by running container " in image_rm_output:
             container = image_rm_output.split("image is being used by running container ")[1]
 
-            try:
-                run([f"docker", "container", "kill", container])
-            except Exception as error: 
-                print("ERROR", error)
+            run([f"docker", "container", "kill", container])
 
 
 
