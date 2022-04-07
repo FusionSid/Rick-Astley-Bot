@@ -59,9 +59,10 @@ CMD ["python3", "RickRoll.py", "main.rickroll"]
         except Exception as error:
             print("ERROR", error)
 
+        if "image is being used by running container " in image:
+            container = image.split("image is being used by running container ")[1]
+
         try:
-            container = run(["docker", "ps", "-a", "-q",  f"--filter ancestor={image}"], capture_output=True).stdout.decode()
-            print(container)
             run([f"docker", "container", "kill", container])
         except Exception as error: 
             print("ERROR", error)
