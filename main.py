@@ -9,7 +9,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
 __version__ = "0.0.1"
 
 async def get_prefix(client, message):
