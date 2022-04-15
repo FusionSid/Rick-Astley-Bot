@@ -1,7 +1,7 @@
-FROM fusionsid/ricklang
+FROM ricklang
 
 ARG CODE
 
-RUN printf "${CODE}" > code.rickroll
+RUN echo -e ${CODE} > code.rickroll
 
-CMD ["timeout", "-s", "KILL", "5", "python3", "RickRoll.py", "code.rickroll"]   
+CMD ["timeout", "-s", "KILL", "5", "python3", "RickRoll.py", "code.rickroll"]
