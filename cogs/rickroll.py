@@ -15,15 +15,14 @@ class Ricklang(commands.Cog):
         code = code.replace("`", "")
 
         output = await runner.run_code(code, "rickroll-lang", await_task=True)
-
-        await ctx.send(
-            embed=discord.Embed(
-                title="Output",
-                color=discord.Color.blue(),
-                description=f"""```\n{output}\n```""",
-                timestamp=datetime.datetime.now()
-            )
+        em = discord.Embed(
+            title="Output",
+            color=discord.Color.blue(),
+            description=f"""```\n{output}\n```""",
+            timestamp=datetime.datetime.now()
         )
+
+        await ctx.send(embed=em)
 
 
     @commands.Cog.listener()
