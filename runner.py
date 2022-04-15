@@ -31,9 +31,9 @@ async def cleanup(random_code: str) -> None:
     ).stdout.decode()
 
     # >/dev/null 2>&1 just makes it so it does not print the output of the command to terminal
-    os.system(f"docker container kill {container} >/dev/null 2>&1")
-    os.system(f"docker container rm -f {container} >/dev/null 2>&1")
-    os.system(f"docker image rm -f {image} >/dev/null 2>&1")
+    os.system(f"docker container kill {container}")
+    os.system(f"docker container rm -f {container}")
+    os.system(f"docker image rm -f {image}")
 
 
 async def run_code(code: str, language: LANGUAGES, **kwargs) -> str:
@@ -68,7 +68,7 @@ async def run_code(code: str, language: LANGUAGES, **kwargs) -> str:
         "docker", "build", 
         "-t", random_code, f"./{language}/",
         "--build-arg", f"CODE={code}",
-    ], stdout=DEVNULL,stderr=DEVNULL,)  # build the container
+    ], stdout=DEVNULL,)  # build the container
 
     output = run([
             "timeout", "-s", "KILL", "3",
