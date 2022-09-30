@@ -32,7 +32,6 @@ class RickAstley(commands.Bot):
             case_insensitive=True,
             command_prefix=">",
             owner_ids=[624076054969188363, 726987234284273675],
-            debug_guilds=[938913935774605442],
             allowed_mentions=allowed_mentions,
         )
 
