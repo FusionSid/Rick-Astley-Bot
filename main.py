@@ -11,12 +11,6 @@ load_dotenv()
 
 __version__ = "0.0.1"
 
-async def get_prefix(client, message):
-    with open("database/config.json") as f:
-        data = json.load(f)
-
-    return data["prefix"]
-
 
 class RickAstley(commands.Bot):
     """
@@ -36,8 +30,9 @@ class RickAstley(commands.Bot):
             intents=intents,
             help_command=None,
             case_insensitive=True,
-            command_prefix=get_prefix,
+            command_prefix=">",
             owner_ids=[624076054969188363, 726987234284273675],
+            debug_guilds=[938913935774605442],
             allowed_mentions=allowed_mentions,
         )
 

@@ -6,7 +6,6 @@ import discord
 from discord.ext import commands
 from discord.commands import slash_command
 
-from utils import kwarg_to_embed
 
 
 class MyView(discord.ui.View):
@@ -35,28 +34,12 @@ class Fun(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command()
-    async def claim(self, ctx):
-        em = discord.Embed(title="Claim 100k Coins", color=discord.Color.random())
-        em.timestamp = datetime.datetime.utcnow()
-        await ctx.send(embed=em, view=MyView())
-
     @slash_command(name="claim", description="Claim you coins")
     async def _claim(self, ctx):
         em = discord.Embed(title="Claim 100k Coins", color=discord.Color.random())
         em.timestamp = datetime.datetime.utcnow()
-        await ctx.send(embed=em, view=MyView())
+        await ctx.respond(embed=em, view=MyView())
 
-    @commands.command()
-    async def embed(self, ctx, *, kwargs):
-        data = await kwarg_to_embed(self.client, ctx, kwargs)
-        if data is None:
-            return
-        em = data[0]
-        channel = data[1]
-
-        await ctx.message.delete()
-        await channel.send(embed=em)
 
     @commands.command(
         name="runcode",

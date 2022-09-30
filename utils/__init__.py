@@ -1,1 +1,0 @@
-from .embed import kwarg_to_embed
