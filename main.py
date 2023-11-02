@@ -1,5 +1,4 @@
 import os
-import json
 import time
 import datetime
 
@@ -18,7 +17,6 @@ class RickAstley(commands.Bot):
     """
 
     def __init__(self):
-
         self.cogs_list = []
         self.version = __version__
         self.last_login_time = datetime.datetime.now()
@@ -50,7 +48,7 @@ def loading_bar(length: int, index: int, title: str, end: str):
     done = round(percent_done / (100 / 50))
     togo = 50 - done
 
-    done_str = "█" * int(done)  
+    done_str = "█" * int(done)
     togo_str = "░" * int(togo)
 
     print(f"{title} {done_str}{togo_str} {int(percent_done)}% Done", end="\r")
@@ -66,12 +64,11 @@ def start_bot(client: RickAstley):
     Parameters
         :param client (RickAstley): The amazing rick astley client
     """
-    cogs = []
-
-    for filename in os.listdir(f"cogs/"):
-        if filename.endswith(".py"):
-            cogs.append(f"cogs.{filename[:-3]}")
-
+    cogs = [
+        f"cogs.{filename[:-3]}"
+        for filename in os.listdir("cogs/")
+        if filename.endswith(".py")
+    ]
     print("\n")
     for index, cog in enumerate(cogs):
         client.cogs_list = cogs
@@ -93,5 +90,5 @@ if __name__ == "__main__":
             return
 
         await client.process_commands(message)
-    
+
     start_bot(client)

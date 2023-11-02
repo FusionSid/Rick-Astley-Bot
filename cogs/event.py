@@ -10,13 +10,13 @@ class Event(commands.Cog):
         self.client = client
 
     @commands.Cog.listener()
-    async def on_message(self, message):
+    async def on_message(self, message: discord.Message):
         if message.author.bot:
             return
 
         if (
             self.client.user.mentioned_in(message)
-            and message.mention_everyone == False
+            and message.mention_everyone is False
             and message.reference is None
         ):
             with open("./database/lyrics.json") as f:
@@ -24,7 +24,6 @@ class Event(commands.Cog):
 
             send = random.choice(data)
             await message.channel.send(send)
-
 
     @commands.Cog.listener()
     async def on_ready(self):
